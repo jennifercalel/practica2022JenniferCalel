@@ -12,6 +12,9 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.JButton;
 import javax.swing.JOptionPane;
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
+import javax.swing.table.DefaultTableModel;
 
 public class Ventana extends JFrame{ //Indica que hereda de los objetos JFrame
     Usuario ususistem[] = new Usuario[10]; //Creación de arreglo para los 10 usuarios
@@ -19,11 +22,15 @@ public class Ventana extends JFrame{ //Indica que hereda de los objetos JFrame
     JPanel panelControl = new JPanel();
     JPanel panelCrearUsuario = new JPanel();
     int control = 1;
+    Cliente clientes[] = new Cliente[100];
+    int controlCliente = 0;
+    JPanel panelControlClientes = new JPanel();
     
      //Método constructor
      public Ventana(){
         Objetos();
         crearAdmin();
+        crearClientes();
     }
      
      public void crearAdmin(){ //En la posición 0 posicionar al administrador
@@ -32,6 +39,20 @@ public class Ventana extends JFrame{ //Indica que hereda de los objetos JFrame
         ususistem[0].nombre = "administrador";
         ususistem[0].contra = "123456";
      }
+     
+    public void crearClientes(){
+       clientes[0]= new Cliente();
+       clientes[0].nombre = "cliente 1";
+       clientes[0].edad = 22;
+       clientes[0].genero = 'M';
+       clientes[0].nit = 150;
+       
+       clientes[1]= new Cliente();
+       clientes[1].nombre = "cliente 2";
+       clientes[1].edad = 30;
+       clientes[1].genero = 'F';
+       clientes[1].nit = 300;  
+    }
        
     public void Objetos(){
         
@@ -123,6 +144,14 @@ public class Ventana extends JFrame{ //Indica que hereda de los objetos JFrame
         JButton btnAdminClientes = new JButton("Administración de Clientes");
         btnAdminClientes.setBounds(160,100,250,50);
         panelControl.add(btnAdminClientes);
+        ActionListener administrarClientes = new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+               panelControlCli();
+               panelControlClientes.setVisible(true);  
+            }   
+        };
+        btnAdminClientes.addActionListener(administrarClientes); 
         
         JButton btnAdminProductos = new JButton("Administración de Productos");
         btnAdminProductos.setBounds(160,200,250,50);
@@ -242,6 +271,27 @@ public class Ventana extends JFrame{ //Indica que hereda de los objetos JFrame
         } else {
                 JOptionPane.showMessageDialog(null, "No se puede registrar más usuarios");  
         }
-            
-    }            
+    }
+    public void panelControlCli(){
+        this.getContentPane().add(panelControlClientes);
+        panelControlClientes.setLayout(null);
+        this.setSize(750, 600);
+        this.setTitle("Administración de Clientes ");
+        panelControl.setVisible(false); 
+        
+        DefaultTableModel datosTabla = new DefaultTableModel();
+        datosTabla.addColumn("Nombre");
+        datosTabla.addColumn("Edad");
+        datosTabla.addColumn("Genero");
+        datosTabla.addColumn("NIT");
+        String fila [] = {"Juan", "15", "M", "500"};
+        datosTabla.addRow(fila);
+        String fila2 [] = {"Juan", "15", "M", "500"};
+        datosTabla.addRow(fila2);
+        
+        JTable tablaClientes = new JTable(datosTabla);
+        JScrollPane barraTablaClientes = new JScrollPane(tablaClientes);
+        barraTablaClientes.setBounds(10,10,300,100);
+        panelControlClientes.add(barraTablaClientes);
+    }
 }

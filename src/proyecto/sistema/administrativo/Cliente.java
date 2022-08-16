@@ -1,8 +1,8 @@
 package proyecto.sistema.administrativo;
 
 public class Cliente {
-    String nombre, nit;
-    int edad;
+    String nombre;
+    int edad, nit;
     char genero;
 
 }
