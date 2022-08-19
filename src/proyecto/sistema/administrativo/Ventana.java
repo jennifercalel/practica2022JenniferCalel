@@ -10,7 +10,12 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
+import java.io.IOException;
 import javax.swing.JButton;
+import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
@@ -284,14 +289,49 @@ public class Ventana extends JFrame{ //Indica que hereda de los objetos JFrame
         datosTabla.addColumn("Edad");
         datosTabla.addColumn("Genero");
         datosTabla.addColumn("NIT");
-        String fila [] = {"Juan", "15", "M", "500"};
-        datosTabla.addRow(fila);
-        String fila2 [] = {"Juan", "15", "M", "500"};
-        datosTabla.addRow(fila2);
+        
+        for(int i = 0; i<100; i++){
+            if(clientes[i] != null){
+                String fila [] = {clientes[i].nombre, String.valueOf(clientes[i].edad), String.valueOf(clientes[i].genero), String.valueOf(clientes[i].nit)};
+                datosTabla.addRow(fila);
+            }
+        }
         
         JTable tablaClientes = new JTable(datosTabla);
         JScrollPane barraTablaClientes = new JScrollPane(tablaClientes);
         barraTablaClientes.setBounds(10,10,300,100);
         panelControlClientes.add(barraTablaClientes);
+        
+        JButton btnCargarArchivo = new JButton("Buscar archivo CSV");
+        btnCargarArchivo.setBounds(300, 10, 200, 25);
+        panelControlClientes.add(btnCargarArchivo);
+         ActionListener buscarArchivo = new ActionListener(){
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                File archivoSeleccionado;
+                JFileChooser ventanaSeleccion = new JFileChooser();
+                ventanaSeleccion.showOpenDialog(null);
+                archivoSeleccionado = ventanaSeleccion.getSelectedFile();
+                System.out.println("La ubicación del archivo es " + archivoSeleccionado.getPath());
+                leerArchivoCSV(archivoSeleccionado.getPath());
+            } 
+        };
+         btnCargarArchivo.addActionListener(buscarArchivo);
+    }
+    
+    public void leerArchivoCSV(String ruta){
+        try{
+            BufferedReader archivoTemporal = new BufferedReader(new FileReader(ruta));
+            String lineaLeida = "";
+            while(lineaLeida !=null){
+                lineaLeida= archivoTemporal.readLine();
+                if(lineaLeida != null){
+                    System.out.println(lineaLeida);
+                }
+            }
+            archivoTemporal.close();
+        }catch(IOException error ){
+            JOptionPane.showMessageDialog(null,"No es posible abrir el archivo CSV");
+        }
     }
 }
