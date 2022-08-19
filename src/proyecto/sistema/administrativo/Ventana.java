@@ -63,7 +63,7 @@ public class Ventana extends JFrame{ //Indica que hereda de los objetos JFrame
         
         this.getContentPane().add(panelInicioSesion);
         panelInicioSesion.setLayout(null);
-        panelInicioSesion.setBackground(new Color (190, 229, 227)); //Agregar color al panel
+        panelInicioSesion.setBackground(new Color (226, 210, 172)); //Agregar color al panel
         
         JLabel lblLogin = new JLabel("Login");
         lblLogin.setBounds(175, 15, 100, 45);
@@ -326,12 +326,31 @@ public class Ventana extends JFrame{ //Indica que hereda de los objetos JFrame
             while(lineaLeida !=null){
                 lineaLeida= archivoTemporal.readLine();
                 if(lineaLeida != null){
-                    System.out.println(lineaLeida);
+                    String datosSeparados[] = lineaLeida.split(",");
+                    
+                    int posicion = 0;
+                    if(controlCliente < 100){
+                        for(int i = 0; i<99; i++) {
+                        if (clientes [i] == null) {
+                            posicion = i;
+                            break;
+                            }
+                        }
+                    clientes [posicion] = new Cliente();
+                    clientes [posicion].nombre = datosSeparados[0];
+                    clientes [posicion].edad = Integer.parseInt(datosSeparados[1]);
+                    clientes [posicion].genero = datosSeparados[2].charAt(0);
+                    clientes [posicion].nit = Integer.parseInt(datosSeparados[3]);
+                    controlCliente++;
+                    }else{
+                        JOptionPane.showMessageDialog(null, "No se puede registrar más clientes");
+                    }
                 }
             }
+            JOptionPane.showMessageDialog(null, "Usuario registrado exitosamente, total de usuarios" + controlCliente);
             archivoTemporal.close();
         }catch(IOException error ){
             JOptionPane.showMessageDialog(null,"No es posible abrir el archivo CSV");
-        }
+        } 
     }
 }
