@@ -1,10 +1,9 @@
 
 package proyecto.sistema.administrativo;
 
-
-import javax.swing.JFrame; //Importar paquete para ventanas
-import javax.swing.JLabel; //Importar paquete de etiquetas
-import javax.swing.JPanel; //Importar paquete de paneles
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
 import javax.swing.JTextField;
 import java.awt.Color;
 import java.awt.Font;
@@ -20,17 +19,23 @@ import javax.swing.JOptionPane;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
+import org.jfree.chart.ChartFactory;
+import org.jfree.chart.ChartPanel;
+import org.jfree.chart.JFreeChart;
+import org.jfree.data.general.DefaultPieDataset;
+import org.jfree.chart.plot.PlotOrientation;
+import org.jfree.data.category.DefaultCategoryDataset;
 
 public class Ventana extends JFrame{ //Indica que hereda de los objetos JFrame
     Usuario ususistem[] = new Usuario[10]; //Creación de arreglo para los 10 usuarios
-    JPanel panelInicioSesion = new JPanel(); //Crear panel Inicio Sesión
-    JPanel panelControl = new JPanel();
-    JPanel panelCrearUsuario = new JPanel();
-    int control = 1;
+    JPanel panelInicioSesion;
+    JPanel panelControl;
+    JPanel panelCrearUsuario;
+    int control = 2;
     Cliente clientes[] = new Cliente[100];
     int controlCliente = 0;
-    JPanel panelControlClientes = new JPanel();
-    
+    JPanel panelControlClientes;
+    int controlClientes = 2;
      //Método constructor
      public Ventana(){
         Objetos();
@@ -43,8 +48,13 @@ public class Ventana extends JFrame{ //Indica que hereda de los objetos JFrame
         ususistem[0].nombreUsuario = "admin";
         ususistem[0].nombre = "administrador";
         ususistem[0].contra = "123456";
+     //usuario de prueba
+        ususistem[1] = new Usuario();
+        ususistem[1].nombreUsuario = "karla";
+        ususistem[1].nombre = "Karla";
+        ususistem[1].contra = "12";
      }
-     
+      
     public void crearClientes(){
        clientes[0]= new Cliente();
        clientes[0].nombre = "cliente 1";
@@ -60,7 +70,7 @@ public class Ventana extends JFrame{ //Indica que hereda de los objetos JFrame
     }
        
     public void Objetos(){
-        
+        panelInicioSesion = new JPanel();
         this.getContentPane().add(panelInicioSesion);
         panelInicioSesion.setLayout(null);
         panelInicioSesion.setBackground(new Color (226, 210, 172)); //Agregar color al panel
@@ -113,7 +123,7 @@ public class Ventana extends JFrame{ //Indica que hereda de los objetos JFrame
         ActionListener crearUsuario = new ActionListener () {
             @Override
             public void actionPerformed(ActionEvent e) {
-                panelCrearUsuario.setVisible(true);
+                //panelCrearUsuario.setVisible(true);
                 crearUsuario();
             }
         }; 
@@ -140,6 +150,7 @@ public class Ventana extends JFrame{ //Indica que hereda de los objetos JFrame
     }
     
     public void panelControl(){
+        panelControl = new JPanel();
         this.getContentPane().add(panelControl);
         panelControl.setLayout(null);
         this.setSize(600, 500);
@@ -167,6 +178,7 @@ public class Ventana extends JFrame{ //Indica que hereda de los objetos JFrame
         panelControl.add(btnReportes);
     }
     public void crearUsuario(){
+        panelCrearUsuario = new JPanel();
         this.getContentPane().add(panelCrearUsuario);
         panelCrearUsuario.setLayout(null);
         this.setSize(500, 450);
@@ -278,12 +290,14 @@ public class Ventana extends JFrame{ //Indica que hereda de los objetos JFrame
         }
     }
     public void panelControlCli(){
+        panelControlClientes = new JPanel();
         this.getContentPane().add(panelControlClientes);
         panelControlClientes.setLayout(null);
-        this.setSize(750, 600);
+        this.setSize(950, 600);
         this.setTitle("Administración de Clientes ");
         panelControl.setVisible(false); 
         
+        //Creación de la tabla
         DefaultTableModel datosTabla = new DefaultTableModel();
         datosTabla.addColumn("Nombre");
         datosTabla.addColumn("Edad");
@@ -302,8 +316,28 @@ public class Ventana extends JFrame{ //Indica que hereda de los objetos JFrame
         barraTablaClientes.setBounds(10,10,300,100);
         panelControlClientes.add(barraTablaClientes);
         
+        //Creación gráfico circular
+        DefaultPieDataset datos = new DefaultPieDataset();
+        datos.setValue("Masculino", totalHombres());
+        datos.setValue("Femenino", totalMujeres());
+        
+        JFreeChart graficoCircular = ChartFactory.createPieChart("Generos en el sistema", datos);
+        ChartPanel panelCircular = new ChartPanel(graficoCircular);
+        panelCircular.setBounds(10, 120, 300, 300);
+        panelControlClientes.add(panelCircular);
+        
+        //Creación gráfico de columnas
+        DefaultCategoryDataset datos2 = new DefaultCategoryDataset();
+        datos2.addValue(rango18a30(), "18-30", "Edad");
+        datos2.addValue(rango31a45(), "31-45", "Edad");
+        datos2.addValue(rango45mas(), "Mayor a 45", "Edad");
+        JFreeChart graficoColumnas = ChartFactory.createBarChart("Rango de Edades", "Nota", "Escala", datos2, PlotOrientation.VERTICAL, true, true, false);
+        ChartPanel panelColumnas = new ChartPanel(graficoColumnas);
+        panelColumnas.setBounds(450, 120, 300, 300);
+        panelControlClientes.add(panelColumnas);
+        
         JButton btnCargarArchivo = new JButton("Buscar archivo CSV");
-        btnCargarArchivo.setBounds(300, 10, 200, 25);
+        btnCargarArchivo.setBounds(325, 10, 200, 30);
         panelControlClientes.add(btnCargarArchivo);
          ActionListener buscarArchivo = new ActionListener(){
             @Override
@@ -314,13 +348,88 @@ public class Ventana extends JFrame{ //Indica que hereda de los objetos JFrame
                 archivoSeleccionado = ventanaSeleccion.getSelectedFile();
                 System.out.println("La ubicación del archivo es " + archivoSeleccionado.getPath());
                 leerArchivoCSV(archivoSeleccionado.getPath());
+                panelControlClientes.setVisible(false);
+                panelControlCli();
             } 
         };
          btnCargarArchivo.addActionListener(buscarArchivo);
+         
+        JButton btnReporte = new JButton("Reportes");
+        btnReporte.setBounds(325,45, 200, 30);
+        panelControlClientes.add(btnReporte);
+        ActionListener crearHTML = new ActionListener(){
+            @Override
+            public void actionPerformed(ActionEvent e) {
+               
+            }
+            
+        };
+    }
+    
+    
+    public int totalHombres(){
+        int total = 0;
+        for(int i=0; i<100; i++){
+            if(clientes[i] != null){
+                if(clientes[i].genero == 'M'){
+                    total++;
+                }
+            }
+        }
+    return total;
+    }
+    
+    public int totalMujeres(){
+        int total = 0;
+        for(int i=0; i<100; i++){
+            if(clientes[i] != null){
+                if(clientes[i].genero == 'M'){
+                    total++;
+                }
+            }
+        }
+    return total;
+    }
+    
+    public int rango18a30(){
+        int total = 0;
+        for(int i=0; i<100; i++){
+            if(clientes[i] != null){
+                if(clientes[i].edad >18 && clientes[i].edad <=30){
+                    total++;
+                }
+            }
+        }
+    return total;
+    }
+    
+        public int rango31a45(){
+        int total = 0;
+        for(int i=0; i<100; i++){
+            if(clientes[i] != null){
+                if(clientes[i].edad >31 && clientes[i].edad <=45){
+                    total++;
+                }
+            }
+        }
+    return total;
+    }
+        
+        public int rango45mas(){
+        int total = 0;
+        for(int i=0; i<100; i++){
+            if(clientes[i] != null){
+                if(clientes[i].edad >45){
+                    total++;
+                }
+            }
+        }
+    return total;
     }
     
     public void leerArchivoCSV(String ruta){
         try{
+
             BufferedReader archivoTemporal = new BufferedReader(new FileReader(ruta));
             String lineaLeida = "";
             while(lineaLeida !=null){
@@ -329,7 +438,7 @@ public class Ventana extends JFrame{ //Indica que hereda de los objetos JFrame
                     String datosSeparados[] = lineaLeida.split(",");
                     
                     int posicion = 0;
-                    if(controlCliente < 100){
+                    if(controlClientes < 100){
                         for(int i = 0; i<99; i++) {
                         if (clientes [i] == null) {
                             posicion = i;
@@ -341,13 +450,13 @@ public class Ventana extends JFrame{ //Indica que hereda de los objetos JFrame
                     clientes [posicion].edad = Integer.parseInt(datosSeparados[1]);
                     clientes [posicion].genero = datosSeparados[2].charAt(0);
                     clientes [posicion].nit = Integer.parseInt(datosSeparados[3]);
-                    controlCliente++;
+                    controlClientes++;
                     }else{
                         JOptionPane.showMessageDialog(null, "No se puede registrar más clientes");
                     }
                 }
             }
-            JOptionPane.showMessageDialog(null, "Usuario registrado exitosamente, total de usuarios" + controlCliente);
+            JOptionPane.showMessageDialog(null, "Usuario registrado exitosamente, total de usuarios" + controlClientes);
             archivoTemporal.close();
         }catch(IOException error ){
             JOptionPane.showMessageDialog(null,"No es posible abrir el archivo CSV");
