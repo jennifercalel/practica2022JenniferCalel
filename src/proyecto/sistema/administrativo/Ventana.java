@@ -1,10 +1,7 @@
 
 package proyecto.sistema.administrativo;
 
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.JTextField;
+
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
@@ -13,11 +10,16 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
+import java.io.PrintWriter;
 import javax.swing.JButton;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.ChartPanel;
@@ -354,18 +356,54 @@ public class Ventana extends JFrame{ //Indica que hereda de los objetos JFrame
         };
          btnCargarArchivo.addActionListener(buscarArchivo);
          
-        JButton btnReporte = new JButton("Reportes");
+        JButton btnReporte = new JButton("Crear reporte HTML");
         btnReporte.setBounds(325,45, 200, 30);
         panelControlClientes.add(btnReporte);
         ActionListener crearHTML = new ActionListener(){
             @Override
             public void actionPerformed(ActionEvent e) {
-               
+               crearReporte();
             }
             
         };
+        btnReporte.addActionListener(crearHTML);
     }
     
+    public void crearReporte(){
+        try{
+            PrintWriter escribir = new PrintWriter("reportes/index.html","UTF-8");
+            escribir.println("<!doctype html>");
+            escribir.println("<html>");
+            escribir.println("<head>");
+            escribir.println("<title>Reporte del sistema</title>");
+            escribir.println("</head>");
+            escribir.println("<body>");
+            escribir.println("<h1>Listado de clientes en el sistema</h1>");
+            escribir.println("<br>");
+            
+            escribir.println("<table>");
+            escribir.println("<tr>");
+            escribir.println("<td>NIT</td> <td>Nombre</td> <td>Edad<td>Género<td>");
+            escribir.println("</tr>");
+            for(int i=0; i<99; i++){
+                if(clientes[i] != null){
+                    escribir.println("<tr>");
+                    escribir.println("<td>" + clientes[i].nit + "</td><td>" + clientes[i].nombre + "</td><td>" + clientes[i].edad + "</td><td>" + clientes[i].genero + "</td>");
+                    escribir.println("</tr>");
+                }
+            }
+            
+            escribir.println("</table>");
+            escribir.println("</body>");
+            escribir.println("</html>");
+            escribir.close();
+            
+            JOptionPane.showMessageDialog(null, "Reporte creado con éxito, este se encuentra en la carpeta REPORTES");
+        }catch(IOException error){
+            JOptionPane.showMessageDialog(null, "No se pudo crear el reporte");
+        }
+        
+    }
     
     public int totalHombres(){
         int total = 0;
@@ -383,7 +421,7 @@ public class Ventana extends JFrame{ //Indica que hereda de los objetos JFrame
         int total = 0;
         for(int i=0; i<100; i++){
             if(clientes[i] != null){
-                if(clientes[i].genero == 'M'){
+                if(clientes[i].genero == 'F'){
                     total++;
                 }
             }
