@@ -123,7 +123,7 @@ public class Ventana extends JFrame{ //Indica que hereda de los objetos JFrame
         panelInicioSesion.add(btnIngresar);
         ActionListener Ingresar = new ActionListener(){
             @Override
-            public void actionPerformed(ActionEvent e) {
+            public void actionPerformed(ActionEvent ae) {
                 if(txtUsuario.getText().equals("") || txtContra.getText().equals("")){
                   JOptionPane.showMessageDialog(null, "Debe llenar todos los campos");
                 }else{
@@ -140,7 +140,7 @@ public class Ventana extends JFrame{ //Indica que hereda de los objetos JFrame
         panelInicioSesion.add(btnCrearUsuario);
         ActionListener crearUsuario = new ActionListener () {
             @Override
-            public void actionPerformed(ActionEvent e) {
+            public void actionPerformed(ActionEvent ae) {
                 //panelCrearUsuario.setVisible(true);
                 crearUsuario();
             }
@@ -188,7 +188,7 @@ public class Ventana extends JFrame{ //Indica que hereda de los objetos JFrame
         panelControl.add(btnAdminClientes);
         ActionListener administrarClientes = new ActionListener() {
             @Override
-            public void actionPerformed(ActionEvent e) {
+            public void actionPerformed(ActionEvent ae) {
                panelControlCli();
                panelControlClientes.setVisible(true);  
             }   
@@ -202,7 +202,7 @@ public class Ventana extends JFrame{ //Indica que hereda de los objetos JFrame
         panelControl.add(btnAdminProductos);   
         ActionListener administrarProductos = new ActionListener() {
             @Override
-            public void actionPerformed(ActionEvent e) {
+            public void actionPerformed(ActionEvent ae) {
                panelControlProd();
                panelControlProductos.setVisible(true);  
 
@@ -268,7 +268,7 @@ public class Ventana extends JFrame{ //Indica que hereda de los objetos JFrame
         panelCrearUsuario.add(btnRegistrar);
         ActionListener registro = new ActionListener() {
             @Override
-            public void actionPerformed(ActionEvent e) {
+            public void actionPerformed(ActionEvent ae) {
                 if(txtUsuario.getText().equals("") || txtNombre.getText().equals("") || txtContra.getText().equals("") || txtConfContra.getText().equals("")){
                   JOptionPane.showMessageDialog(null, "Debe llenar todos los campos");
                 }else{
@@ -293,7 +293,7 @@ public class Ventana extends JFrame{ //Indica que hereda de los objetos JFrame
         panelCrearUsuario.add(btnVolver);
         ActionListener volverInicio = new ActionListener() {
             @Override
-            public void actionPerformed(ActionEvent e) {
+            public void actionPerformed(ActionEvent ae) {
                 panelInicioSesion.setVisible(true);
                 panelCrearUsuario.setVisible(false);
                 volverInicio();
@@ -381,7 +381,7 @@ public class Ventana extends JFrame{ //Indica que hereda de los objetos JFrame
         panelControlClientes.add(btnCargarArchivo);
          ActionListener buscarArchivo = new ActionListener(){
             @Override
-            public void actionPerformed(ActionEvent e) {
+            public void actionPerformed(ActionEvent ae) {
                 File archivoSeleccionado;
                 JFileChooser ventanaSeleccion = new JFileChooser();
                 ventanaSeleccion.showOpenDialog(null);
@@ -404,7 +404,7 @@ public class Ventana extends JFrame{ //Indica que hereda de los objetos JFrame
         panelControlClientes.add(btnReporte);
         ActionListener crearHTML = new ActionListener(){
             @Override
-            public void actionPerformed(ActionEvent e) {
+            public void actionPerformed(ActionEvent ae) {
                crearReporte();
             }
             
@@ -418,7 +418,7 @@ public class Ventana extends JFrame{ //Indica que hereda de los objetos JFrame
         panelControlClientes.add(btnVolver);
         ActionListener volverInicio = new ActionListener() {
             @Override
-            public void actionPerformed(ActionEvent e) {
+            public void actionPerformed(ActionEvent ae) {
                 panelControl.setVisible(true);
                 panelControlClientes.setVisible(false);
                 volverInicio();
@@ -586,40 +586,40 @@ public class Ventana extends JFrame{ //Indica que hereda de los objetos JFrame
         panelControl.setVisible(false); 
         
         //Creación de la tabla
-        DefaultTableModel datosTabla = new DefaultTableModel();
-        datosTabla.addColumn("Nombre");
-        datosTabla.addColumn("Cantidad");
-        datosTabla.addColumn("Producto");
+        DefaultTableModel datoTabla = new DefaultTableModel();
+        datoTabla.addColumn("Nombre");
+        datoTabla.addColumn("Cantidad");
+        datoTabla.addColumn("Producto");
         
         for(int i = 0; i<100; i++){
             if(productos[i] != null){
                 String fila [] = {productos[i].nombre, String.valueOf(productos[i].cantidad), String.valueOf(productos[i].precio)};
-                datosTabla.addRow(fila);
+                datoTabla.addRow(fila);
             }
         }
         
-        JTable tablaProductos = new JTable(datosTabla);
+        JTable tablaProductos = new JTable(datoTabla);
         JScrollPane barraTablaProductos = new JScrollPane(tablaProductos);
         barraTablaProductos.setBounds(15,15,325,200);
         panelControlProductos.add(barraTablaProductos);
         
         //Creación gráfico de columnas
         DefaultCategoryDataset datos3 = new DefaultCategoryDataset();
-        datos3.addValue(rangomenor150(), "0-150", "Edad");
-        datos3.addValue(rango151a300(), "151-300", "Edad");
-        datos3.addValue(rangomayor300(), "Mayor a 300", "Edad");
+        datos3.addValue(rangomenor150(), "0-150", "Precio");
+        datos3.addValue(rango151a300(), "151-300", "Precio");
+        datos3.addValue(rangomayor300(), "Mayor a 300", "Precio");
         JFreeChart graficoColumnas = ChartFactory.createBarChart("Rango de Precios", "Precio", "Cantidad", datos3, PlotOrientation.VERTICAL, true, true, false);
         ChartPanel panelColumnas = new ChartPanel(graficoColumnas);
         panelColumnas.setBounds(375, 230, 325, 300);
         panelControlProductos.add(panelColumnas);
         
-        JButton btnCargarArchivo = new JButton("Buscar archivo CSV");
-        btnCargarArchivo.setBounds(375, 15, 200, 45);
-        btnCargarArchivo.setBackground(new Color (200, 230, 227));
-        panelControlProductos.add(btnCargarArchivo);
+        JButton btnCargarArchivoProducto = new JButton("Buscar archivo CSV");
+        btnCargarArchivoProducto.setBounds(375, 15, 200, 45);
+        btnCargarArchivoProducto.setBackground(new Color (200, 230, 227));
+        panelControlProductos.add(btnCargarArchivoProducto);
          ActionListener buscarArchivo = new ActionListener(){
             @Override
-            public void actionPerformed(ActionEvent e) {
+            public void actionPerformed(ActionEvent ae) {
                 File archivoSeleccionado;
                 JFileChooser ventanaSeleccion = new JFileChooser();
                 ventanaSeleccion.showOpenDialog(null);
@@ -634,7 +634,7 @@ public class Ventana extends JFrame{ //Indica que hereda de los objetos JFrame
                 }
             } 
         };
-         btnCargarArchivo.addActionListener(buscarArchivo);
+         btnCargarArchivoProducto.addActionListener(buscarArchivo);
          
         JButton btnReporte = new JButton("Crear reporte HTML");
         btnReporte.setBounds(375,75, 200, 45);
@@ -642,7 +642,7 @@ public class Ventana extends JFrame{ //Indica que hereda de los objetos JFrame
         panelControlProductos.add(btnReporte);
         ActionListener crearHTML = new ActionListener(){
             @Override
-            public void actionPerformed(ActionEvent e) {
+            public void actionPerformed(ActionEvent ae) {
                crearReporteProd();
             }
             
@@ -656,7 +656,7 @@ public class Ventana extends JFrame{ //Indica que hereda de los objetos JFrame
         panelControlProductos.add(btnVolver);
         ActionListener volverInicio = new ActionListener() {
             @Override
-            public void actionPerformed(ActionEvent e) {
+            public void actionPerformed(ActionEvent ae) {
                 panelControl.setVisible(true);
                 panelControlProductos.setVisible(false);
                 volverInicio();
@@ -684,7 +684,7 @@ public class Ventana extends JFrame{ //Indica que hereda de los objetos JFrame
     public void crearReporteProd(){
         try{
             ordenar2();
-            PrintWriter escribir = new PrintWriter("reportes/producto.html","UTF-8");
+            PrintWriter escribir = new PrintWriter("reporteProducto/index.html","UTF-8");
             escribir.println("<!doctype html>");
             escribir.println("<html>");
             escribir.println("<head>");
@@ -711,7 +711,7 @@ public class Ventana extends JFrame{ //Indica que hereda de los objetos JFrame
             escribir.println("</html>");
             escribir.close();
             
-            JOptionPane.showMessageDialog(null, "Reporte creado con éxito, este se encuentra en la carpeta REPORTES");
+            JOptionPane.showMessageDialog(null, "Reporte creado con éxito, este se encuentra en la carpeta REPORTES PRODUCTO");
         }catch(IOException error){
             JOptionPane.showMessageDialog(null, "No se pudo crear el reporte");
         }
@@ -734,7 +734,7 @@ public class Ventana extends JFrame{ //Indica que hereda de los objetos JFrame
         int total = 0;
         for(int i=0; i<100; i++){
             if(productos[i] != null){
-                if(productos[i].precio >151 && clientes[i].edad <=300){
+                if(productos[i].precio >151 && productos[i].precio <=300){
                     total++;
                 }
             }
@@ -746,7 +746,7 @@ public class Ventana extends JFrame{ //Indica que hereda de los objetos JFrame
         int total = 0;
         for(int i=0; i<100; i++){
             if(productos[i] != null){
-                if(clientes[i].edad >300){
+                if(productos[i].precio >300){
                     total++;
                 }
             }
