@@ -11,7 +11,7 @@ public class ProyectoSistemaAdministrativo {
         marco.setVisible(true); //Visible
         marco.setTitle("Sistema Administrativo de Clientes y Recursos"); //Nombre
         marco.setSize(450, 350); //Medidas ancho-alto
-        marco.setLocationRelativeTo(null); //Centrado
+        //marco.setLocationRelativeTo(null); //Centrado
         marco.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); //Cerrar al dar clic
         
     }

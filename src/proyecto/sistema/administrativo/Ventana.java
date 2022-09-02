@@ -34,10 +34,14 @@ public class Ventana extends JFrame{ //Indica que hereda de los objetos JFrame
     JPanel panelControl;
     JPanel panelCrearUsuario;
     int control = 2;
+    
     Cliente clientes[] = new Cliente[100];
-    int controlCliente = 0;
     JPanel panelControlClientes;
     int controlClientes = 2;
+    
+    Producto productos[]=new Producto[100];
+    JPanel panelControlProductos;
+    int controlProductos = 2;
      //Método constructor
      public Ventana(){
         Objetos();
@@ -45,16 +49,16 @@ public class Ventana extends JFrame{ //Indica que hereda de los objetos JFrame
         crearClientes();
     }
      
-     public void crearAdmin(){ //En la posición 0 posicionar al administrador
+     public void crearAdmin(){ 
         ususistem[0] = new Usuario();
         ususistem[0].nombreUsuario = "admin";
         ususistem[0].nombre = "administrador";
-        ususistem[0].contra = "123456";
+        ususistem[0].contra = "123";
      //usuario de prueba
         ususistem[1] = new Usuario();
-        ususistem[1].nombreUsuario = "karla";
-        ususistem[1].nombre = "Karla";
-        ususistem[1].contra = "12";
+        ususistem[1].nombreUsuario = "jcalel";
+        ususistem[1].nombre = "Jennifer";
+        ususistem[1].contra = "246";
      }
       
     public void crearClientes(){
@@ -70,38 +74,50 @@ public class Ventana extends JFrame{ //Indica que hereda de los objetos JFrame
        clientes[1].genero = 'F';
        clientes[1].nit = 300;  
     }
+    
+    public void crearProductos(){
+       productos [0]= new Producto();
+       productos [0].nombre = "producto 1";
+       productos [0].cantidad = 22;
+       productos [0].precio = 20; 
        
+       productos [1]= new Producto();
+       productos [1].nombre = "producto 2";
+       productos [1].cantidad = 22;
+       productos [1].precio = 20;
+    }   
+    
     public void Objetos(){
         panelInicioSesion = new JPanel();
         this.getContentPane().add(panelInicioSesion);
         panelInicioSesion.setLayout(null);
-        panelInicioSesion.setBackground(new Color (226, 210, 172)); //Agregar color al panel
+        panelInicioSesion.setBackground(new Color (226, 210, 172));
         
-        JLabel lblLogin = new JLabel("Login");
-        lblLogin.setBounds(175, 15, 100, 45);
+        JLabel lblLogin = new JLabel("Iniciar Sesión");
+        lblLogin.setBounds(120, 20, 250, 50);
         panelInicioSesion.add(lblLogin);
-        lblLogin.setFont (new Font ("Richela Kids", Font.PLAIN, 30));
+        lblLogin.setFont (new Font ("Segoe UI Black", Font.PLAIN, 30));
         
         JLabel lblUsuario = new JLabel("Usuario");
-        lblUsuario.setBounds(60, 75, 100, 15);
+        lblUsuario.setBounds(60, 90, 100, 30);
         panelInicioSesion.add(lblUsuario);
-        lblUsuario.setFont (new Font ("Verdana", Font.BOLD, 14));
+        lblUsuario.setFont (new Font ("Segoe UI Light", Font.PLAIN, 16));
         
         JLabel lblContra = new JLabel("Contraseña");
-        lblContra.setBounds(60, 130, 100, 15);
+        lblContra.setBounds(60, 145, 100, 30);
         panelInicioSesion.add(lblContra);
-        lblContra.setFont (new Font ("Verdana", Font.BOLD, 14));
+        lblContra.setFont (new Font ("Segoe UI Light", Font.PLAIN, 16));
         
         JTextField txtUsuario = new JTextField();
-        txtUsuario.setBounds(160, 75, 200, 25);
+        txtUsuario.setBounds(160, 90, 200, 30);
         panelInicioSesion.add(txtUsuario);
         
         JTextField txtContra = new JTextField();
-        txtContra.setBounds(160, 130, 200, 25);
+        txtContra.setBounds(160, 145, 200, 30);
         panelInicioSesion.add(txtContra);
         
         JButton btnIngresar = new JButton("Ingresar");
-        btnIngresar.setBounds (130, 190, 180, 35);
+        btnIngresar.setBounds (60, 210, 145, 40);
         btnIngresar.setBackground(new Color (108, 200, 216 ));
         btnIngresar.setFont (new Font ("Segoe UI Semibold", Font.BOLD, 14));
         panelInicioSesion.add(btnIngresar);
@@ -118,7 +134,7 @@ public class Ventana extends JFrame{ //Indica que hereda de los objetos JFrame
         btnIngresar. addActionListener(Ingresar); 
         
         JButton btnCrearUsuario = new JButton ("Registrarse");
-        btnCrearUsuario.setBounds(130, 240, 180, 35);
+        btnCrearUsuario.setBounds(210, 210, 145, 40);
         btnCrearUsuario.setBackground(new Color (241, 148, 138));
         btnCrearUsuario.setFont (new Font ("Segoe UI Semibold", Font.BOLD, 14));
         panelInicioSesion.add(btnCrearUsuario);
@@ -155,12 +171,20 @@ public class Ventana extends JFrame{ //Indica que hereda de los objetos JFrame
         panelControl = new JPanel();
         this.getContentPane().add(panelControl);
         panelControl.setLayout(null);
-        this.setSize(600, 500);
+        panelControl.setBackground(new Color (235, 238, 222));
+        this.setSize(450, 350);
         this.setTitle("Control Principal");
         panelInicioSesion.setVisible(false);
         
+        JLabel lblLogin = new JLabel("Menú Principal");
+        lblLogin.setBounds(100, 15, 300, 75);
+        panelControl.add(lblLogin);
+        lblLogin.setFont (new Font ("Richela Kids", Font.PLAIN, 30));
+        
         JButton btnAdminClientes = new JButton("Administración de Clientes");
-        btnAdminClientes.setBounds(160,100,250,50);
+        btnAdminClientes.setBounds(80,100,250,50);
+        btnAdminClientes.setBackground(new Color (177, 216, 205));
+        btnAdminClientes.setFont (new Font ("Segoe UI Semibold", Font.BOLD, 14));
         panelControl.add(btnAdminClientes);
         ActionListener administrarClientes = new ActionListener() {
             @Override
@@ -172,24 +196,33 @@ public class Ventana extends JFrame{ //Indica que hereda de los objetos JFrame
         btnAdminClientes.addActionListener(administrarClientes); 
         
         JButton btnAdminProductos = new JButton("Administración de Productos");
-        btnAdminProductos.setBounds(160,200,250,50);
-        panelControl.add(btnAdminProductos);
-        
-        JButton btnReportes = new JButton("Reportes");
-        btnReportes.setBounds(160,300, 250,50);
-        panelControl.add(btnReportes);
+        btnAdminProductos.setBounds(80,200,250,50);
+        btnAdminProductos.setBackground(new Color (177, 216, 205));
+        btnAdminProductos.setFont (new Font ("Segoe UI Semibold", Font.BOLD, 14));
+        panelControl.add(btnAdminProductos);   
+        ActionListener administrarProductos = new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+               panelControlProd();
+               panelControlProductos.setVisible(true);  
+
+            }   
+        };
+        btnAdminProductos.addActionListener(administrarProductos);
     }
+    
     public void crearUsuario(){
         panelCrearUsuario = new JPanel();
         this.getContentPane().add(panelCrearUsuario);
         panelCrearUsuario.setLayout(null);
         this.setSize(500, 450);
+        panelCrearUsuario.setBackground(new Color (226, 210, 172));
         this.setTitle("Registro de Usuario");
         panelInicioSesion.setVisible(false);
         
         JLabel lblRegistro = new JLabel("Registro de Usuario");
-        lblRegistro.setBounds(110, 15, 300, 45);
-        lblRegistro.setFont (new Font ("Richela Kids", Font.PLAIN, 30));
+        lblRegistro.setBounds(100, 15, 300, 45);
+        lblRegistro.setFont (new Font ("Segoe UI Black", Font.PLAIN, 30));
         panelCrearUsuario.add(lblRegistro);
     
         JLabel lblUsuario = new JLabel("Usuario");
@@ -229,7 +262,9 @@ public class Ventana extends JFrame{ //Indica que hereda de los objetos JFrame
         panelCrearUsuario.add(txtConfContra);
         
         JButton btnRegistrar = new JButton ("Registrar");
-        btnRegistrar.setBounds(85,320, 150,50);
+        btnRegistrar.setBounds(85,320, 150,40);
+        btnRegistrar.setFont (new Font ("Segoe UI Semibold", Font.BOLD, 14));
+        btnRegistrar.setBackground(new Color (241, 148, 138));
         panelCrearUsuario.add(btnRegistrar);
         ActionListener registro = new ActionListener() {
             @Override
@@ -252,7 +287,9 @@ public class Ventana extends JFrame{ //Indica que hereda de los objetos JFrame
         btnRegistrar.addActionListener(registro);
         
         JButton btnVolver = new JButton ("Volver al Inicio");
-        btnVolver.setBounds(260,320, 150,50);
+        btnVolver.setBounds(260,320, 150,40);
+        btnVolver.setFont (new Font ("Segoe UI Semibold", Font.BOLD, 14));
+        btnVolver.setBackground(new Color (108, 200, 216 ));
         panelCrearUsuario.add(btnVolver);
         ActionListener volverInicio = new ActionListener() {
             @Override
@@ -295,7 +332,7 @@ public class Ventana extends JFrame{ //Indica que hereda de los objetos JFrame
         panelControlClientes = new JPanel();
         this.getContentPane().add(panelControlClientes);
         panelControlClientes.setLayout(null);
-        this.setSize(950, 600);
+        this.setSize(800, 600);
         this.setTitle("Administración de Clientes ");
         panelControl.setVisible(false); 
         
@@ -315,7 +352,7 @@ public class Ventana extends JFrame{ //Indica que hereda de los objetos JFrame
         
         JTable tablaClientes = new JTable(datosTabla);
         JScrollPane barraTablaClientes = new JScrollPane(tablaClientes);
-        barraTablaClientes.setBounds(10,10,300,100);
+        barraTablaClientes.setBounds(15,15,325,200);
         panelControlClientes.add(barraTablaClientes);
         
         //Creación gráfico circular
@@ -325,7 +362,7 @@ public class Ventana extends JFrame{ //Indica que hereda de los objetos JFrame
         
         JFreeChart graficoCircular = ChartFactory.createPieChart("Generos en el sistema", datos);
         ChartPanel panelCircular = new ChartPanel(graficoCircular);
-        panelCircular.setBounds(10, 120, 300, 300);
+        panelCircular.setBounds(15, 230, 325, 300);
         panelControlClientes.add(panelCircular);
         
         //Creación gráfico de columnas
@@ -333,13 +370,14 @@ public class Ventana extends JFrame{ //Indica que hereda de los objetos JFrame
         datos2.addValue(rango18a30(), "18-30", "Edad");
         datos2.addValue(rango31a45(), "31-45", "Edad");
         datos2.addValue(rango45mas(), "Mayor a 45", "Edad");
-        JFreeChart graficoColumnas = ChartFactory.createBarChart("Rango de Edades", "Nota", "Escala", datos2, PlotOrientation.VERTICAL, true, true, false);
+        JFreeChart graficoColumnas = ChartFactory.createBarChart("Rango de Edades", "Edad", "Escala", datos2, PlotOrientation.VERTICAL, true, true, false);
         ChartPanel panelColumnas = new ChartPanel(graficoColumnas);
-        panelColumnas.setBounds(450, 120, 300, 300);
+        panelColumnas.setBounds(375, 230, 325, 300);
         panelControlClientes.add(panelColumnas);
         
         JButton btnCargarArchivo = new JButton("Buscar archivo CSV");
-        btnCargarArchivo.setBounds(325, 10, 200, 30);
+        btnCargarArchivo.setBounds(375, 15, 200, 45);
+        btnCargarArchivo.setBackground(new Color (200, 230, 227));
         panelControlClientes.add(btnCargarArchivo);
          ActionListener buscarArchivo = new ActionListener(){
             @Override
@@ -347,17 +385,22 @@ public class Ventana extends JFrame{ //Indica que hereda de los objetos JFrame
                 File archivoSeleccionado;
                 JFileChooser ventanaSeleccion = new JFileChooser();
                 ventanaSeleccion.showOpenDialog(null);
-                archivoSeleccionado = ventanaSeleccion.getSelectedFile();
+                archivoSeleccionado = ventanaSeleccion.getSelectedFile(); 
+                if(archivoSeleccionado ==null){
+                    System.out.println("No hat ruta");
+                }else{
                 System.out.println("La ubicación del archivo es " + archivoSeleccionado.getPath());
                 leerArchivoCSV(archivoSeleccionado.getPath());
                 panelControlClientes.setVisible(false);
                 panelControlCli();
+                }
             } 
         };
          btnCargarArchivo.addActionListener(buscarArchivo);
          
         JButton btnReporte = new JButton("Crear reporte HTML");
-        btnReporte.setBounds(325,45, 200, 30);
+        btnReporte.setBounds(375,75, 200, 45);
+        btnReporte.setBackground(new Color (200, 230, 227));
         panelControlClientes.add(btnReporte);
         ActionListener crearHTML = new ActionListener(){
             @Override
@@ -367,10 +410,43 @@ public class Ventana extends JFrame{ //Indica que hereda de los objetos JFrame
             
         };
         btnReporte.addActionListener(crearHTML);
+        
+        JButton btnVolver = new JButton ("Volver al Menú");
+        btnVolver.setBounds(375,135, 200,45);
+        btnVolver.setFont (new Font ("Segoe UI Semibold", Font.BOLD, 14));
+        btnVolver.setBackground(new Color (200, 230, 227));
+        panelControlClientes.add(btnVolver);
+        ActionListener volverInicio = new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                panelControl.setVisible(true);
+                panelControlClientes.setVisible(false);
+                volverInicio();
+            }   
+        };
+        btnVolver.addActionListener(volverInicio);
     }
+    
+    public void ordenar(){
+        Cliente auxiliar;
+        for(int i=0; i<99; i++){
+            for(int j=0; j<99; j++){ 
+                if(clientes[j+1]==null){
+                    break;
+                }else{
+                    if(clientes[j].edad>clientes[j+1].edad){
+                        auxiliar = clientes[j+1];
+                        clientes[j+1] = clientes[j];
+                        clientes[j]= auxiliar;
+                    }
+                }
+            }
+        }
+   }
     
     public void crearReporte(){
         try{
+            ordenar();
             PrintWriter escribir = new PrintWriter("reportes/index.html","UTF-8");
             escribir.println("<!doctype html>");
             escribir.println("<html>");
@@ -500,4 +576,217 @@ public class Ventana extends JFrame{ //Indica que hereda de los objetos JFrame
             JOptionPane.showMessageDialog(null,"No es posible abrir el archivo CSV");
         } 
     }
+    
+        public void panelControlProd(){
+        panelControlProductos = new JPanel();
+        this.getContentPane().add(panelControlProductos);
+        panelControlProductos.setLayout(null);
+        this.setSize(800, 600);
+        this.setTitle("Administración de Productos ");
+        panelControl.setVisible(false); 
+        
+        //Creación de la tabla
+        DefaultTableModel datosTabla = new DefaultTableModel();
+        datosTabla.addColumn("Nombre");
+        datosTabla.addColumn("Cantidad");
+        datosTabla.addColumn("Producto");
+        
+        for(int i = 0; i<100; i++){
+            if(productos[i] != null){
+                String fila [] = {productos[i].nombre, String.valueOf(productos[i].cantidad), String.valueOf(productos[i].precio)};
+                datosTabla.addRow(fila);
+            }
+        }
+        
+        JTable tablaProductos = new JTable(datosTabla);
+        JScrollPane barraTablaProductos = new JScrollPane(tablaProductos);
+        barraTablaProductos.setBounds(15,15,325,200);
+        panelControlProductos.add(barraTablaProductos);
+        
+        //Creación gráfico de columnas
+        DefaultCategoryDataset datos3 = new DefaultCategoryDataset();
+        datos3.addValue(rangomenor150(), "0-150", "Edad");
+        datos3.addValue(rango151a300(), "151-300", "Edad");
+        datos3.addValue(rangomayor300(), "Mayor a 300", "Edad");
+        JFreeChart graficoColumnas = ChartFactory.createBarChart("Rango de Precios", "Precio", "Cantidad", datos3, PlotOrientation.VERTICAL, true, true, false);
+        ChartPanel panelColumnas = new ChartPanel(graficoColumnas);
+        panelColumnas.setBounds(375, 230, 325, 300);
+        panelControlProductos.add(panelColumnas);
+        
+        JButton btnCargarArchivo = new JButton("Buscar archivo CSV");
+        btnCargarArchivo.setBounds(375, 15, 200, 45);
+        btnCargarArchivo.setBackground(new Color (200, 230, 227));
+        panelControlProductos.add(btnCargarArchivo);
+         ActionListener buscarArchivo = new ActionListener(){
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                File archivoSeleccionado;
+                JFileChooser ventanaSeleccion = new JFileChooser();
+                ventanaSeleccion.showOpenDialog(null);
+                archivoSeleccionado = ventanaSeleccion.getSelectedFile(); 
+                if(archivoSeleccionado ==null){
+                    System.out.println("No hat ruta");
+                }else{
+                System.out.println("La ubicación del archivo es " + archivoSeleccionado.getPath());
+                leerArchivoCSVProductos(archivoSeleccionado.getPath());
+                panelControlProductos.setVisible(false);
+                panelControlProd();
+                }
+            } 
+        };
+         btnCargarArchivo.addActionListener(buscarArchivo);
+         
+        JButton btnReporte = new JButton("Crear reporte HTML");
+        btnReporte.setBounds(375,75, 200, 45);
+        btnReporte.setBackground(new Color (200, 230, 227));
+        panelControlProductos.add(btnReporte);
+        ActionListener crearHTML = new ActionListener(){
+            @Override
+            public void actionPerformed(ActionEvent e) {
+               crearReporteProd();
+            }
+            
+        };
+        btnReporte.addActionListener(crearHTML);
+        
+        JButton btnVolver = new JButton ("Volver al Menú");
+        btnVolver.setBounds(375,135, 200,45);
+        btnVolver.setFont (new Font ("Segoe UI Semibold", Font.BOLD, 14));
+        btnVolver.setBackground(new Color (200, 230, 227));
+        panelControlProductos.add(btnVolver);
+        ActionListener volverInicio = new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                panelControl.setVisible(true);
+                panelControlProductos.setVisible(false);
+                volverInicio();
+            }   
+        };
+        btnVolver.addActionListener(volverInicio);
+    }
+        public void ordenar2(){
+        Producto auxiliar;
+        for(int i=0; i<99; i++){
+            for(int j=0; j<99; j++){ 
+                if(productos[j+1]==null){
+                    break;
+                }else{
+                    if(productos[j].precio>productos[j+1].precio){
+                        auxiliar = productos[j+1];
+                        productos[j+1] = productos[j];
+                        productos[j]= auxiliar;
+                    }
+                }
+            }
+        }
+   }
+            
+    public void crearReporteProd(){
+        try{
+            ordenar2();
+            PrintWriter escribir = new PrintWriter("reportes/producto.html","UTF-8");
+            escribir.println("<!doctype html>");
+            escribir.println("<html>");
+            escribir.println("<head>");
+            escribir.println("<title>Reporte del sistema</title>");
+            escribir.println("</head>");
+            escribir.println("<body>");
+            escribir.println("<h1>Listado de productos en el sistema</h1>");
+            escribir.println("<br>");
+            
+            escribir.println("<table>");
+            escribir.println("<tr>");
+            escribir.println("<td>Nombre</td> <td>Cantidad</td> <td>Precio</td>");
+            escribir.println("</tr>");
+            for(int i=0; i<99; i++){
+                if(productos[i] != null){
+                    escribir.println("<tr>");
+                    escribir.println("<td>" + productos[i].nombre + "</td><td>" + productos[i].cantidad + "</td><td>" + productos[i].precio + "</td><td>");
+                    escribir.println("</tr>");
+                }
+            }
+            
+            escribir.println("</table>");
+            escribir.println("</body>");
+            escribir.println("</html>");
+            escribir.close();
+            
+            JOptionPane.showMessageDialog(null, "Reporte creado con éxito, este se encuentra en la carpeta REPORTES");
+        }catch(IOException error){
+            JOptionPane.showMessageDialog(null, "No se pudo crear el reporte");
+        }
+        
+    }
+    
+    public int rangomenor150(){
+        int total = 0;
+        for(int i=0; i<100; i++){
+            if(productos[i] != null){
+                if(productos[i].precio <=150){
+                    total++;
+                }
+            }
+        }
+    return total;
+    }
+    
+        public int rango151a300(){
+        int total = 0;
+        for(int i=0; i<100; i++){
+            if(productos[i] != null){
+                if(productos[i].precio >151 && clientes[i].edad <=300){
+                    total++;
+                }
+            }
+        }
+    return total;
+    }
+        
+        public int rangomayor300(){
+        int total = 0;
+        for(int i=0; i<100; i++){
+            if(productos[i] != null){
+                if(clientes[i].edad >300){
+                    total++;
+                }
+            }
+        }
+    return total;
+    }
+    
+    public void leerArchivoCSVProductos(String ruta){
+        try{
+
+            BufferedReader archivoTemporal = new BufferedReader(new FileReader(ruta));
+            String lineaLeida = "";
+            while(lineaLeida !=null){
+                lineaLeida= archivoTemporal.readLine();
+                if(lineaLeida != null){
+                    String datosSeparados[] = lineaLeida.split(",");
+                    
+                    int posicion = 0;
+                    if(controlProductos < 100){
+                        for(int i = 0; i<99; i++) {
+                        if (productos [i] == null) {
+                            posicion = i;
+                            break;
+                            }
+                        }
+                    productos [posicion] = new Producto();
+                    productos [posicion].nombre = datosSeparados[0];
+                    productos [posicion].cantidad = Integer.parseInt(datosSeparados[1]);
+                    productos [posicion].precio = Float.parseFloat(datosSeparados[2]);
+                    controlProductos++;
+                    }else{
+                        JOptionPane.showMessageDialog(null, "No se puede registrar más clientes");
+                    }
+                }
+            }
+            JOptionPane.showMessageDialog(null, "Usuario registrado exitosamente, total de usuarios" + controlProductos);
+            archivoTemporal.close();
+        }catch(IOException error ){
+            JOptionPane.showMessageDialog(null,"No es posible abrir el archivo CSV");
+        } 
+    }       
 }
+
