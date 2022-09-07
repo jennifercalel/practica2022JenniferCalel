@@ -456,11 +456,23 @@ public class Ventana extends JFrame{ //Indica que hereda de los objetos JFrame
     public void crearReporte(){
         try{
             ordenar();
+            PrintWriter escribirCSS = new PrintWriter("reporteClientes/estilo.css","UTF-8");
+            escribirCSS.println("");
+            escribirCSS.print("html {   font-size: 20px; font-family: 'Open Sans', sans-serif; }");
+            escribirCSS.print("h1 { font-size: 60px; text-align: center; }");
+            escribirCSS.print("p, li {   font-size: 16px;   line-height: 2;   letter-spacing: 1px; }");
+            escribirCSS.print("table { table-layout: fixed;   width:250px;}   td{border: 1px solid black; width: 190px;  word-wrap: break-word}");
+            escribirCSS.print("html { background-color: #00539F; }");
+            escribirCSS.print("body { width: 970px; margin: 0 auto; background-color: #FF9500; padding: 0 20px 20px 20px; border: 5px solid black; }");
+            escribirCSS.print("h1 { margin: 0; padding: 20px 0; color: #00539F; text-shadow: 3px 3px 1px black; }");
+            escribirCSS.close();
+            
             PrintWriter escribir = new PrintWriter("reporteCliente/index.html","UTF-8");
             escribir.println("<!doctype html>");
             escribir.println("<html>");
             escribir.println("<head>");
             escribir.println("<title>Reporte del sistema</title>");
+            escribir.println("<link rel=\" stylesheet\" href=\"estilo.css\">");
             escribir.println("</head>");
             escribir.println("<body>");
             escribir.println("<h1>Listado de clientes en el sistema</h1>");
