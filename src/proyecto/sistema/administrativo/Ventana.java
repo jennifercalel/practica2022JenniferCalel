@@ -78,12 +78,12 @@ public class Ventana extends JFrame{ //Indica que hereda de los objetos JFrame
     
     public void crearProductos(){
        productos[0]= new Producto();
-       productos[0].nombre = "producto 1";
-       productos[0].cantidad = 22;
+       productos[0].nombre = "Producto 1";
+       productos[0].cantidad = 50;
        productos[0].precio = 100; 
        
        productos[1]= new Producto();
-       productos[1].nombre = "producto 2";
+       productos[1].nombre = "Producto 2";
        productos[1].cantidad = 22;
        productos[1].precio = 300;
     }   
@@ -443,7 +443,7 @@ public class Ventana extends JFrame{ //Indica que hereda de los objetos JFrame
                 if(clientes[j+1]==null){
                     break;
                 }else{
-                    if(clientes[j].edad>clientes[j+1].edad){
+                    if(clientes[j].edad<clientes[j+1].edad){
                         auxiliar = clientes[j+1];
                         clientes[j+1] = clientes[j];
                         clientes[j]= auxiliar;
@@ -456,21 +456,22 @@ public class Ventana extends JFrame{ //Indica que hereda de los objetos JFrame
     public void crearReporte(){
         try{
             ordenar();
-            PrintWriter escribirCSS = new PrintWriter("reporteClientes/estilo.css","UTF-8");
+            PrintWriter escribirCSS = new PrintWriter("reporteCliente/estilo.css","UTF-8");
             escribirCSS.println("");
-            escribirCSS.print("html {   font-size: 20px; font-family: 'Open Sans', sans-serif; }");
-            escribirCSS.print("h1 { font-size: 60px; text-align: center; }");
-            escribirCSS.print("p, li {   font-size: 16px;   line-height: 2;   letter-spacing: 1px; }");
-            escribirCSS.print("table { table-layout: fixed;   width:250px;}   td{border: 1px solid black; width: 190px;  word-wrap: break-word}");
-            escribirCSS.print("html { background-color: #00539F; }");
-            escribirCSS.print("body { width: 970px; margin: 0 auto; background-color: #FF9500; padding: 0 20px 20px 20px; border: 5px solid black; }");
-            escribirCSS.print("h1 { margin: 0; padding: 20px 0; color: #00539F; text-shadow: 3px 3px 1px black; }");
+            escribirCSS.print("html {font-size: 20px; font-family: 'Arciform', Segoe UI Light;}");
+            escribirCSS.print("h1 {font-size: 60px; text-align: center;}");
+            escribirCSS.print("p, li {font-size: 16px;   line-height: 1;   letter-spacing: 1px; }");
+            escribirCSS.print("table {table-layout: fixed;   width:75%; text-align: center; border-collapse: collapse; background-color: #FDFEFE} td{border: 1px solid black; width: 190px;  word-wrap: break-word;}");
+            escribirCSS.print ("th{border: 1px solid black; width: 190px;  word-wrap: break-word; padding-top:12px; padding-bottom:12px; text-align: center; background-color: #7FB3D5; color: white;}");
+            escribirCSS.print("html { background-color: #A9CCE3; }");
+            escribirCSS.print("h1 { font-family: 'Sofia', sans-serif;}; font-size; 30px; text-shadow:3px 3px 3px #ababab");
             escribirCSS.close();
             
             PrintWriter escribir = new PrintWriter("reporteCliente/index.html","UTF-8");
             escribir.println("<!doctype html>");
             escribir.println("<html>");
             escribir.println("<head>");
+            escribir.println("<link rel=\"stylesheet\" href=\"https://fonts.googleapis.com/css?family=Sofia\">");
             escribir.println("<title>Reporte del sistema</title>");
             escribir.println("<link rel=\" stylesheet\" href=\"estilo.css\">");
             escribir.println("</head>");
@@ -478,9 +479,10 @@ public class Ventana extends JFrame{ //Indica que hereda de los objetos JFrame
             escribir.println("<h1>Listado de clientes en el sistema</h1>");
             escribir.println("<br>");
             
+            escribir.println("<center>");
             escribir.println("<table>");
             escribir.println("<tr>");
-            escribir.println("<td>NIT</td> <td>Nombre</td> <td>Edad<td>Género<td>");
+            escribir.println("<th>NIT</th> <th>Nombre</th> <th>Edad</th> <th>Género</th>");
             escribir.println("</tr>");
             for(int i=0; i<99; i++){
                 if(clientes[i] != null){
@@ -491,11 +493,12 @@ public class Ventana extends JFrame{ //Indica que hereda de los objetos JFrame
             }
             
             escribir.println("</table>");
+            escribir.println("</center>");
             escribir.println("</body>");
             escribir.println("</html>");
             escribir.close();
             
-            JOptionPane.showMessageDialog(null, "Reporte creado con éxito, este se encuentra en la carpeta REPORTES");
+            JOptionPane.showMessageDialog(null, "Reporte creado con éxito, este se encuentra en la carpeta reporteCliente ");
         }catch(IOException error){
             JOptionPane.showMessageDialog(null, "No se pudo crear el reporte");
         }
@@ -698,7 +701,7 @@ public class Ventana extends JFrame{ //Indica que hereda de los objetos JFrame
                 if(productos[j+1]==null){
                     break;
                 }else{
-                    if(productos[j].precio>productos[j+1].precio){
+                    if(productos[j].precio<productos[j+1].precio){
                         auxiliar = productos[j+1];
                         productos[j+1] = productos[j];
                         productos[j]= auxiliar;
@@ -711,34 +714,55 @@ public class Ventana extends JFrame{ //Indica que hereda de los objetos JFrame
     public void crearReporteProd(){
         try{
             ordenar2();
+            PrintWriter escribirCSS = new PrintWriter("reporteProducto/estilo.css","UTF-8");
+            escribirCSS.println("");
+            escribirCSS.print("html {font-size: 20px; font-family: 'Arciform', Segoe UI Light;}");
+            escribirCSS.print("h1 {font-size: 60px; text-align: center;}");
+            escribirCSS.print("p, li {font-size: 16px;   line-height: 1;   letter-spacing: 1px; }");
+            escribirCSS.print("table {table-layout: fixed;   width:75%; text-align: center; border-collapse: collapse; background-color: #FDFEFE} td{border: 1px solid black; width: 190px;  word-wrap: break-word;}");
+            escribirCSS.print ("th{border: 1px solid black; width: 190px;  word-wrap: break-word; padding-top:12px; padding-bottom:12px; text-align: center; background-color: #7FB3D5; color: white;}");
+            escribirCSS.print("html { background-color: #A9CCE3; }");
+            escribirCSS.print("h1 { font-family: 'Sofia', sans-serif;}; font-size; 30px; text-shadow:3px 3px 3px #ababab");
+            escribirCSS.close();
+            
             PrintWriter escribir = new PrintWriter("reporteProducto/index.html","UTF-8");
             escribir.println("<!doctype html>");
             escribir.println("<html>");
             escribir.println("<head>");
+            escribir.println("<link rel=\"stylesheet\" href=\"https://fonts.googleapis.com/css?family=Sofia\">");
             escribir.println("<title>Reporte del sistema</title>");
+            escribir.println("<link rel=\" stylesheet\" href=\"estilo.css\">");
             escribir.println("</head>");
             escribir.println("<body>");
             escribir.println("<h1>Listado de productos en el sistema</h1>");
             escribir.println("<br>");
             
+            escribir.println("<center>");
             escribir.println("<table>");
             escribir.println("<tr>");
-            escribir.println("<td>Nombre</td> <td>Cantidad</td> <td>Precio</td>");
+            escribir.println("<th>Nombre</th> <th>Cantidad</th> <th>Precio</th>");
             escribir.println("</tr>");
             for(int i=0; i<99; i++){
                 if(productos[i] != null){
+                    if (productos[i].cantidad ==0){
                     escribir.println("<tr>");
-                    escribir.println("<td>" + productos[i].nombre + "</td><td>" + productos[i].cantidad + "</td><td>" + productos[i].precio + "</td><td>");
+                    escribir.println("<td>" + productos[i].nombre + "</td><td>" + "Producto agotado" + "</td><td>" + "Q   " +productos[i].precio + "</td>");
+                    escribir.println("</tr>");  
+                    }else{
+                    escribir.println("<tr>");
+                    escribir.println("<td>" + productos[i].nombre + "</td><td>" + productos[i].cantidad + "</td><td>" + "Q   " +productos[i].precio + "</td>");
                     escribir.println("</tr>");
+                    }
                 }
             }
             
             escribir.println("</table>");
+            escribir.println("<center>");
             escribir.println("</body>");
             escribir.println("</html>");
             escribir.close();
             
-            JOptionPane.showMessageDialog(null, "Reporte creado con éxito, este se encuentra en la carpeta REPORTES PRODUCTOS");
+            JOptionPane.showMessageDialog(null, "Reporte creado con éxito, este se encuentra en la carpeta reporteProducto");
         }catch(IOException error){
             JOptionPane.showMessageDialog(null, "No se pudo crear el reporte");
         }
@@ -809,7 +833,7 @@ public class Ventana extends JFrame{ //Indica que hereda de los objetos JFrame
                     }
                 }
             }
-            JOptionPane.showMessageDialog(null, "Usuario registrado exitosamente, total de usuarios" + controlProductos);
+            JOptionPane.showMessageDialog(null, "Usuario registrado exitosamente, total de usuarios " + controlProductos);
             archivoTemporal.close();
         }catch(IOException error ){
             JOptionPane.showMessageDialog(null,"No es posible abrir el archivo CSV");
